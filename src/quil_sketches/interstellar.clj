@@ -19,8 +19,9 @@
     (image (state :img) -48 -50)
     (tint 100 100 130 60))
   (doseq [y (map #(mod (+ % (frame-count)) (state :max-y)) (state :ys))]
-    (let [x (- (/ (height) 2) y)]
-      (stroke 200 (- (/ (height) 2) y) 130 60)
+    (let [x (- (/ (height) 2) y)
+          a (min 60 (* 2 (min y (- (state :max-y) y))))]
+      (stroke 200 (- (/ (height) 2) y) 130 a)
       (fill 300 (- (/ (height) 2) y) 130 8)
       (with-translation [(/ (width) 2) (/ (height) 2)]
         (ellipse 0 0 (- (width) (* 1.7 x)) (- (height) (* 1.7 y)))))))

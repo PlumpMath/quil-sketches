@@ -34,9 +34,7 @@
             even-r (- max-r odd-r)]
         (if odd
           (ellipse x y odd-r odd-r)
-          (ellipse x y even-r even-r)))))
-;  (save-frame)
-  )
+          (ellipse x y even-r even-r))))))
 
 (defsketch dotty
   :title "dotty"

@@ -2,26 +2,26 @@
   (:use quil.core
         quil-sketches.util))
 
-(def counter (atom 0))
-
 (defn setup []
   (set-state! :bg-images (map load-image (map #(str "train" % ".jpg") (range 1 6))))
   (frame-rate 4)
   (smooth))
 
-(defn randonee []
+(defn choose-randomly
+  "Returns true and false with equal probability."
+  []
   (rand-nth [false true]))
 
 (defn fill-or-not []
-  (if (randonee)
+  (if (choose-randomly)
     (apply fill (concat (hex-to-rgb "#C5E0DC") [128]))
     (no-fill)))
 
 (defn draw-triangle [x y w up]
   (fill-or-not)
   (if up
-    (triangle x y (+ x w) y (+ x (/ w 2)) (+ y (* w 0.8)))
-    (triangle (+ (/ w 2) x) (+ y (* w 0.8)) (+ x w) y (+ x (* w 1.5)) (+ y (* w 0.8)))))
+    (triangle x y (+ x w) y (+ x (/ w 3)) (+ y (* w 0.8)))
+    (triangle (+ (/ w 4) x) (+ y (* w 0.8)) (+ x w) y (+ x (* w 1.5)) (+ y (* w 0.8)))))
 
 (defn draw []
   ;; tinted tracks
@@ -37,18 +37,18 @@
 
   (with-translation [205 80]
     (let [w 60 h (* w 0.8)]
-      (draw-triangle 0 0 w (randonee))
-      (draw-triangle (- (/ w 2)) h w (randonee))
-      (draw-triangle (/ w 2) h w (randonee))
-      (draw-triangle (- w) h w (randonee))
-      (draw-triangle w h w (randonee))
+      (draw-triangle 0 0 w (choose-randomly))
+      (draw-triangle (- (/ w 2)) h w (choose-randomly))
+      (draw-triangle (/ w 2) h w (choose-randomly))
+      (draw-triangle (- w) h w (choose-randomly))
+      (draw-triangle w h w (choose-randomly))
       (scale 1 -1)
       (translate 0 (- (* 2 h)))
-      (draw-triangle 0 0 w (randonee))
-      (draw-triangle (- (/ w 2)) h w (randonee))
-      (draw-triangle (/ w 2) h w (randonee))
-      (draw-triangle (- w) h w (randonee))
-      (draw-triangle w h w (randonee))))
+      (draw-triangle 0 0 w (choose-randomly))
+      (draw-triangle (- (/ w 2)) h w (choose-randomly))
+      (draw-triangle (/ w 2) h w (choose-randomly))
+      (draw-triangle (- w) h w (choose-randomly))
+      (draw-triangle w h w (choose-randomly))))
 
   (display-filter :blur 0.9))
 
