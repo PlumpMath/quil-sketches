@@ -22,10 +22,8 @@
 
 (defn diamond [terrain x y sz offset]
   (assoc-in terrain [x y]
-            (+ offset (filtered-average [(get-in terrain [x (- y sz)] -1)
-                                         (get-in terrain [x (+ y sz)] -1)
-                                         (get-in terrain [(- x sz) y] -1)
-                                         (get-in terrain [(+ x sz) y] -1)]))))
+            (+ offset (filtered-average (map #(get-in terrain %1 -1)
+                                             [[x (- y sz)] [x (+ y sz)] [(- x sz) y] [(+ x sz) y]])))))
 
 (defn generate [terrain roughness]
   (loop [terrain terrain roughness roughness sz (count terrain)]
